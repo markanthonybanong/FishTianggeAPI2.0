@@ -8,7 +8,7 @@ module.exports = () => {
 
     userRoutes.put('/updateUserStoreId', userController.updateUserStoreId)
 
-    userRoutes.post('/findByEmailAndPass', userController.findUserByEmailAndPass);
+    userRoutes.post('/onUserLogin', userController.onUserLogin);
 
     userRoutes.post('/getUser', userController.getUser);
 

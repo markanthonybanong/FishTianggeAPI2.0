@@ -61,6 +61,26 @@ Deliver.update = (id, deliver, result) => {
         server.mysqlPool.releaseConnection(conn);
     });
 };
+Deliver.deleteToDeliver = (id, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            conn.release();
+            throw err;
+        }
+        conn.query("DELETE FROM deliveries WHERE id = ?", id, (err, res) => {
+            if (err) {
+                result(null, err);
+                return;
+              }
+              if (res.affectedRows == 0) {
+                result({ kind: "not_found" }, null);
+                return;
+              }
+              result(null, res);
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+};
 
 Deliver.updateToDeliverStatus = (id, status, result) => {
     

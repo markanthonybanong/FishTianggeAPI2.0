@@ -9,6 +9,7 @@ const Order = function(order){
     this.quantity            = order.quantity;
     this.customer_name       = order.customerName;
     this.status              = order.orderStatus;
+    this.seller_status       = order.orderSellerStatus;
     this.order_date          = order.orderDate;
     this.customer_mobile_num = order.customerMobileNum;
     this.customer_address    = order.customerAddress;
@@ -38,11 +39,7 @@ Order.getStorePendingOrders = (storeId, result) => {
             conn.release();
             throw err;
         }
-        conn.query(`SELECT * FROM orders WHERE 
-                        store_id = "${storeId}" AND status = "Pending"
-                        or store_id = "${storeId}" AND status = "None"
-                        or store_id = "${storeId}" AND status = "Accept"
-                        or store_id = "${storeId}" AND status = "OnTheWay"`, (err, res) => {
+        conn.query(`SELECT * FROM orders WHERE  store_id = "${storeId}" AND seller_status != "Deliver"`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;
@@ -93,7 +90,7 @@ Order.getPendingOrdersByUserId = (userId, result) => {
             conn.release();
             throw err;
         }
-        conn.query(`SELECT * FROM orders WHERE user_id = "${userId}" AND status != "Deliver" AND status != "Decline"`, (err, res) => {
+        conn.query(`SELECT * FROM orders WHERE user_id = "${userId}" AND status != "Deliver"`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;
@@ -126,7 +123,28 @@ Order.updateOrderStatus = (id, status, result) => {
             conn.release();
             throw err;
         }
-        conn.query("UPDATE orders SET status = ? WHERE id = ?", [status, id], (err, res) => {
+        conn.query("UPDATE orders SET status = ?, seller_status = ? WHERE id = ?", [status, status, id], (err, res) => {
+                    if (err) {
+                        result(null, err);
+                        return;
+                    }
+                    if (res.affectedRows == 0) {
+                        // not found Customer with the id
+                        result({ kind: "not_found" }, null);
+                        return;
+                    }
+                    result(null, { id: status.id, ...status });
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+};
+Order.updateOrderSellerStatus = (id, status, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            conn.release();
+            throw err;
+        }
+        conn.query("UPDATE orders SET seller_status = ? WHERE id = ?", [status, id], (err, res) => {
                     if (err) {
                         result(null, err);
                         return;

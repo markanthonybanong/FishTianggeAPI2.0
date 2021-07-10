@@ -73,7 +73,7 @@ User.udpateUserStoreId = (userId, storeId, result) => {
     });
 };
 
-User.findUserByEmailAndPass = (user, result) => {
+User.onUserLogin = (user, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
             conn.release();

@@ -15,6 +15,8 @@ module.exports = () => {
     orderRoutes.post('/getDeliveredOrdersByUserId', orderController.getDeliveredOrdersByUserId);
     
     orderRoutes.put('/updateOrderStatus', orderController.updateOrderStatus);
+
+    orderRoutes.put('/updateOrderSellerStatus', orderController.updateOrderSellerStatus);
  
     orderRoutes.delete('/deleteOrder/:id', orderController.deleteOrder);
     

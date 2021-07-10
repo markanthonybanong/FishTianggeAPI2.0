@@ -6,6 +6,8 @@ module.exports = () => {
 
     deliverRoutes.put('/updateToDeliver', deliverController.updateToDeliver);
 
+    deliverRoutes.delete('/deleteToDeliver/:id', deliverController.deleteToDeliver);
+
     deliverRoutes.put('/updateToDeliverStatus', deliverController.updateToDeliverStatus);
 
     deliverRoutes.put('/updateCourierStatus', deliverController.updateCourierStatus);
@@ -18,6 +20,7 @@ module.exports = () => {
     
     deliverRoutes.post('/getCourierToDeliverProduct', deliverController.getCourierToDeliverProduct);
 
+    
     // productRoutes.delete('/deleteProduct/:id', productController.deleteProduct);
     
     // productRoutes.post('/getProduct', productController.getProduct);

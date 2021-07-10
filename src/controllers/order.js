@@ -11,6 +11,7 @@ exports.addOrder = async(req, res) => {
         quantity: req.body.quantity,
         customerName: req.body.customer_name,
         orderStatus: req.body.status,
+        orderSellerStatus: req.body.seller_status,
         orderDate: req.body.order_date,
         customerMobileNum: req.body.customer_mobile_num,
         customerAddress: req.body.customer_address,
@@ -84,6 +85,15 @@ exports.getDeliveredOrdersByUserId = async(req, res) => {
 };
 exports.updateOrderStatus = async(req, res) => {
     Order.updateOrderStatus(req.body.id, req.body.orderStatus, (err, order) => {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({message: err});
+        } else {
+            res.status(httpStatusCode.OK).json(order);
+        }
+    });
+};
+exports.updateOrderSellerStatus = async(req, res) => {
+    Order.updateOrderSellerStatus(req.body.id, req.body.orderSellerStatus, (err, order) => {
         if(err) {
             res.status(httpStatusCode.BAD_REQUEST).send({message: err});
         } else {

@@ -41,6 +41,21 @@ exports.updateToDeliver = async(req, res) => {
         }
     });
 };
+exports.deleteToDeliver = async(req, res) =>{
+    Deliver.deleteToDeliver(req.params.id, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+              res.status(httpStatusCode.NOT_FOUND).send({
+                message: `Not found order with id ${req.params.id}.`
+              });
+            } else {
+              res.status(httpStatusCode.INTERNAL_SERVER_ERROR).send({
+                message: "Could not delete order with id " + req.params.id
+              });
+            }
+          } else res.status(httpStatusCode.OK).send({ message: `Order was deleted successfully!` });
+    });
+}
 exports.updateToDeliverStatus = async(req, res) => {
     Deliver.updateToDeliverStatus(req.body.id, req.body.status, (err, deliver) => {
         if(err) {
