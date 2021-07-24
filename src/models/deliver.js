@@ -150,7 +150,7 @@ Deliver.getCourierPendingDeliveries = (courierId, result) => {
             conn.release();
             throw err;
         }
-        conn.query(`SELECT * FROM deliveries WHERE courier_id = "${courierId}" AND status != "Deliver" AND status != "Decline"`, (err, res) => {
+        conn.query(`SELECT * FROM deliveries WHERE courier_id = "${courierId}" AND status != "Order Received"`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;
@@ -167,7 +167,7 @@ Deliver.getCourierDeliveredDeliveries = (courierId, result) => {
             conn.release();
             throw err;
         }
-        conn.query(`SELECT * FROM deliveries WHERE courier_id = "${courierId}" AND status = 'Deliver'`, (err, res) => {
+        conn.query(`SELECT * FROM deliveries WHERE courier_id = "${courierId}" AND status = 'Order Received'`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;
@@ -195,4 +195,20 @@ Deliver.getCourierToDeliverProduct = (deliverId, result) => {
     });
 };
 
+Deliver.getDeliverByCourIdAndStatus = (deliverBody, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            conn.release();
+            throw err;
+        }
+        conn.query(`SELECT * FROM deliveries WHERE courier_id = "${deliverBody.courId}" AND status = "${deliverBody.status}" `, (err, res) => {
+            if(err) {
+                result (err, null);
+                return;
+            }
+            result(null, res);
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+};
 module.exports = Deliver;

@@ -8,11 +8,12 @@ exports.add = async(req, res) => {
         weight: req.body.weight,
         quantity: req.body.quantity,
         remark: req.body.remark,
+        category: req.body.category,
+        productId: req.body.id,
         storeId: req.body.storeId,
         userId: req.body.userId,
         img: req.body.img
     });
- 
     Cart.add(cart, (err, cart) => {
         if(err) {
             res.status(httpStatusCode.BAD_REQUEST).send({message: err});

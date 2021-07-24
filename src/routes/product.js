@@ -17,6 +17,8 @@ module.exports = () => {
     productRoutes.put('/updateProductStatus', productController.updateProductStatus);
 
     productRoutes.post('/getArchieveStoreProducts', productController.getArchieveStoreProducts);
+
+    productRoutes.post('/getStoreSameProductsCategory', productController.getStoreSameProductsCategory);
     
     return productRoutes;
 };

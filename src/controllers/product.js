@@ -10,6 +10,7 @@ exports.addProduct = async(req, res) => {
         weight: req.body.weight,
         price: req.body.price,
         isAvailable: req.body.isAvailable,
+        category: req.body.category,
         weightIn: req.body.weightIn,
         status: 'InStore'
     });
@@ -81,6 +82,7 @@ exports.updateProduct = async(req, res) => {
         weight: req.body.weight,
         price: req.body.price,
         isAvailable: req.body.isAvailable,
+        category: req.body.category,
         weightIn: req.body.weightIn,
         status: req.body.status
     });
@@ -105,9 +107,19 @@ exports.updateProductStatus = async(req, res) => {
         }
     });
 };
-
 exports.getArchieveStoreProducts = async(req, res) => {
     Product.getArchieveStoreProducts(req.body.storeId, (err, products)=> {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({
+                message: err
+            });
+        } else {
+            res.status(httpStatusCode.OK).json(products);
+        }
+    });
+};
+exports.getStoreSameProductsCategory = async(req, res) => {
+    Product.getStoreSameProductsCategory(req.body, (err, products)=> {
         if(err) {
             res.status(httpStatusCode.BAD_REQUEST).send({
                 message: err

@@ -39,7 +39,7 @@ Order.getStorePendingOrders = (storeId, result) => {
             conn.release();
             throw err;
         }
-        conn.query(`SELECT * FROM orders WHERE  store_id = "${storeId}" AND seller_status != "Deliver"`, (err, res) => {
+        conn.query(`SELECT * FROM orders WHERE  store_id = "${storeId}" AND seller_status != "Order Received"`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;
@@ -56,7 +56,7 @@ Order.getStoreDeliveredOrders = (storeId, result) => {
             conn.release();
             throw err;
         }
-        conn.query(`SELECT * FROM orders WHERE status = "Deliver" AND store_id = "${storeId}"`, (err, res) => {
+        conn.query(`SELECT * FROM orders WHERE status = "Order Received" AND store_id = "${storeId}"`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;
@@ -90,7 +90,7 @@ Order.getPendingOrdersByUserId = (userId, result) => {
             conn.release();
             throw err;
         }
-        conn.query(`SELECT * FROM orders WHERE user_id = "${userId}" AND status != "Deliver"`, (err, res) => {
+        conn.query(`SELECT * FROM orders WHERE user_id = "${userId}" AND status != "Order Received"`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;
@@ -107,7 +107,7 @@ Order.getDeliveredOrdersByUserId = (userId, result) => {
             conn.release();
             throw err;
         }
-        conn.query(`SELECT * FROM orders WHERE user_id = "${userId}" AND status = "Deliver"`, (err, res) => {
+        conn.query(`SELECT * FROM orders WHERE user_id = "${userId}" AND status = "Order Received"`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;

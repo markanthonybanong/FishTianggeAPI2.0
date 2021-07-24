@@ -8,6 +8,7 @@ const Product = function(product){
     this.weight       = product.weight;
     this.price        = product.price;
     this.is_available = product.isAvailable;
+    this.category     = product.category;
     this.weight_in    = product.weightIn;
     this.status       = product.status
 }
@@ -108,8 +109,8 @@ Product.update = (id, product, result) => {
             conn.release();
             throw err;
         }
-        conn.query("UPDATE products SET img = ?, store_id = ?, remark = ?, name = ?, weight = ?, price = ?, is_available = ?, weight_in = ? WHERE id = ?",
-                     [product.img, product.store_id, product.remark, product.name, product.weight, product.price, product.is_available, product.weight_in, id ], (err, res) => {
+        conn.query("UPDATE products SET img = ?,store_id = ?, remark = ?, name = ?, weight = ?, price = ?, is_available = ?, category = ?, weight_in = ? WHERE id = ?",
+                     [product.img, product.store_id, product.remark, product.name, product.weight, product.price, product.is_available, product.category, product.weight_in, id ], (err, res) => {
                     if (err) {
                         result(null, err);
                         return;
@@ -146,7 +147,6 @@ Product.updateStatus = (id, product, result) => {
         server.mysqlPool.releaseConnection(conn);
     });
 };
-
 Product.getArchieveStoreProducts = (storeId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
@@ -154,6 +154,22 @@ Product.getArchieveStoreProducts = (storeId, result) => {
             throw err;
         }
         conn.query(`SELECT * FROM products WHERE store_id = "${storeId}" AND status = "InArchieve"`, (err, res) => {
+            if(err) {
+                result (err, null);
+                return;
+            }
+            result(null, res);
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+};
+Product.getStoreSameProductsCategory = (product, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            conn.release();
+            throw err;
+        }
+        conn.query(`SELECT * FROM products WHERE store_id = "${product.storeId}" && category = "${product.category}" && id != "${product.productId}"`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;

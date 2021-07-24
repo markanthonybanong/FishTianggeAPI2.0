@@ -124,3 +124,14 @@ exports.getCourierToDeliverProduct = async(req, res) => {
         }
     });
 };
+exports.getDeliverByCourIdAndStatus = async(req, res) => {
+    Deliver.getDeliverByCourIdAndStatus(req.body, (err, deliver)=> {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({
+                message: err
+            });
+        } else {
+            res.status(httpStatusCode.OK).json(deliver);
+        }
+    });
+};

@@ -1,14 +1,17 @@
 const server = require('../server');
 
 const Cart = function(cart){
-    this.name     = cart.name;
-    this.price    = cart.price;
-    this.weight   = cart.weight;
-    this.quantity = cart.quantity;
-    this.remark   = cart.remark;
-    this.store_id = cart.storeId;
-    this.user_id  = cart.userId;     
-    this.img      = cart.img;
+    this.name       = cart.name;
+    this.price      = cart.price;
+    this.weight     = cart.weight;
+    this.quantity   = cart.quantity;
+    this.remark     = cart.remark;
+    this.category   = cart.category;
+    this.product_id = cart.productId;
+    this.store_id   = cart.storeId;
+    this.user_id    = cart.userId;     
+    this.img        = cart.img;
+    
 }
 
 Cart.add = (cart, result) => {
@@ -34,7 +37,7 @@ Cart.getUserCartItems = (userId, result) => {
             conn.release();
             throw err;
         }
-        conn.query(`SELECT * FROM carts WHERE user_id = "${userId}"`, (err, res) => {
+        conn.query(`SELECT * FROM carts WHERE user_id = "${userId}" ORDER BY id DESC`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;

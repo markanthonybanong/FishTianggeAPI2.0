@@ -7,6 +7,9 @@ const cartRoutes        = require('./cart');
 const orderRoutes       = require('./order');
 const deliverRoutes     = require('./deliver');
 const ratingRoutes      = require('./rating');
+const reportRoutes      = require('./report');
+const sukiListRoutes    = require('./suki-list');
+const userMetaRoutes    = require('./user-meta');
 
 module.exports = () => {
     routes.use(
@@ -47,6 +50,21 @@ module.exports = () => {
     routes.use(
         '/api/rating',
         ratingRoutes()
+    );
+
+    routes.use(
+        '/api/report',
+        reportRoutes()
+    );
+
+    routes.use(
+        '/api/sukiList',
+        sukiListRoutes()
+    );
+
+    routes.use(
+        '/api/userMeta',
+        userMetaRoutes()
     );
 
     return routes;
