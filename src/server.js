@@ -11,6 +11,8 @@ const io       = require('socket.io')(8080, {
                     }
                 });
 io.on('connection', socket =>{
+    socket.on('disconnect', function(){
+    });
     require('./socket/index')(io, socket);
 });
 app.use(cors());

@@ -46,7 +46,8 @@ Deliver.update = (id, deliver, result) => {
             conn.release();
             throw err;
         }
-        conn.query("UPDATE deliveries SET courier_name = ?, courier_phone_num = ?, status = ? WHERE id = ?", [deliver.courier_name, deliver.courier_phone_num, 'Pending', id], (err, res) => {
+        const query = "UPDATE deliveries SET courier_id = ?, courier_name = ?, courier_phone_num = ?, status = ? WHERE id = ?" 
+        conn.query(query, [deliver.courier_id, deliver.courier_name, deliver.courier_phone_num, deliver.status, id], (err, res) => {
                     if (err) {
                         result(null, err);
                         return;

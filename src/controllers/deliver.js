@@ -30,8 +30,10 @@ exports.addToDeliver = async(req, res) => {
 };
 exports.updateToDeliver = async(req, res) => {
     const deliver  = new Deliver({
+        courierId: req.body.courierId,
         courierName: req.body.courierName,
         courierPhoneNum: req.body.courierPhoneNum,
+        deliveryStatus: req.body.deliveryStatus,
     });
     Deliver.update(req.body.id, deliver, (err, product) => {
         if(err) {
@@ -80,7 +82,7 @@ exports.updateCourierStatus = async(req, res) => {
         }
     });
 };
-exports.getToDeliver = async(req, res) => {
+exports.getToDeliver = async(req, res) => { //returns null when not found
     Deliver.getToDeliver(req.body.orderId, (err, deliver)=> {
         if(err) {
             res.status(httpStatusCode.BAD_REQUEST).send({

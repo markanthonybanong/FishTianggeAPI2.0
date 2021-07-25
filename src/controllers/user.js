@@ -148,7 +148,6 @@ exports.sendVerificationCode = async(req, res) => {
     const fishTianggeOutlook     = 'fishtiangge@outlook.com'; 
     const fishTianggeOutlookPass = 'OnlineMarket2021';
     const registerUserEmail      = req.body.email;
-    console.log('email ', registerUserEmail);
     const gen = randomNumber.generator({
         min: 1000,
         max: 9999,
