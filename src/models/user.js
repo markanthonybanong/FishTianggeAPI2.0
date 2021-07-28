@@ -150,5 +150,27 @@ User.getMobileNumAndEmail = (user, result) => {
         server.mysqlPool.releaseConnection(conn);
     });
 };
+User.updatePassword = (id, user, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            conn.release();
+            throw err;
+        }
+        conn.query("UPDATE mobile_users SET password = ? WHERE id = ?",
+                     [user.password, id ], (err, res) => {
+                    if (err) {
+                        result(null, err);
+                        return;
+                    }
+                    if (res.affectedRows == 0) {
+                        // not found Customer with the id
+                        result({ kind: "not_found" }, null);
+                        return;
+                    }
+                    result(null, { id: user.id, ...user });
+                    });
+        server.mysqlPool.releaseConnection(conn);
+    });
+};
 
 module.exports = User;

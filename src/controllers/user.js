@@ -182,6 +182,18 @@ exports.sendVerificationCode = async(req, res) => {
       });
 };
 
+exports.updatePassword = async(req, res) => {
+    const user  = new User({
+        password: req.body.password
+    });
+    User.updatePassword(req.body.id, user, (err, user) => {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({message: err});
+        } else {
+            res.status(httpStatusCode.OK).json(user);
+        }
+    });
+};
 
 
 

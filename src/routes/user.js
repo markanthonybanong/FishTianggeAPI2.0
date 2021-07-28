@@ -17,6 +17,9 @@ module.exports = () => {
     userRoutes.post('/getMobileNumAndEmail', userController.getMobileNumAndEmail);
 
     userRoutes.post('/sendVerificationCode', userController.sendVerificationCode);
+
+    userRoutes.put('/updatePassword', userController.updatePassword);
+
     
     return userRoutes;
 };
