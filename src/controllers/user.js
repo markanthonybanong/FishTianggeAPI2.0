@@ -14,7 +14,9 @@ exports.createUser = async(req, res) => {
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,
         password: req.body.password,
-        address: req.body.address
+        address: req.body.address,
+        addressLat: req.body.addressLat,
+        addressLng: req.body.addressLng
     });
 
     User.create(user, (err, user) => {
@@ -25,7 +27,6 @@ exports.createUser = async(req, res) => {
         }
     });
 };
-
 exports.updateUser = async(req, res) => {
     const user  = new User({
         img: req.body.img,
@@ -33,7 +34,9 @@ exports.updateUser = async(req, res) => {
         lastName: req.body.lastName,
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,
-        address: req.body.address
+        address: req.body.address,
+        addressLat: req.body.addressLat,
+        addressLng: req.body.addressLng
     });
     User.update(req.body.id, user, (err, user) => {
         if(err) {
@@ -43,7 +46,6 @@ exports.updateUser = async(req, res) => {
         }
     });
 };
-
 exports.updateUserStoreId = async(req, res) => {
     User.udpateUserStoreId(req.body.id, req.body.storeId, (err, user) => {
         if(err) {

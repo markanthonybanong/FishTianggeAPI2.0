@@ -15,6 +15,8 @@ exports.addOrder = async(req, res) => {
         orderDate: req.body.order_date,
         customerMobileNum: req.body.customer_mobile_num,
         customerAddress: req.body.customer_address,
+        customerAddressLat: req.body.customer_address_lat,
+        customerAddressLng: req.body.customer_address_lng,
         orderNote: req.body.order_note
     });
     

@@ -17,6 +17,8 @@ exports.addToDeliver = async(req, res) => {
         customerName: req.body.customerName,
         customerMobileNum: req.body.customerMobileNum,
         shippingAddress: req.body.shippingAddress,
+        shippingAddressLat: req.body.shippingAddressLat,
+        shippingAddressLng: req.body.shippingAddressLng,
         orderDate: req.body.orderDate
     });
     

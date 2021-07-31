@@ -1,25 +1,23 @@
 const server = require('../server');
 
 const Deliver = function(deliver){
-    this.order_id            = deliver.orderId;
-    this.store_id            = deliver.storeId;
-    this.courier_id          = deliver.courierId;
-    this.courier_name        = deliver.courierName;
-    this.courier_phone_num   = deliver.courierPhoneNum;
-    this.product_img         = deliver.productImg;
-    this.name                = deliver.name;
-    this.price               = deliver.price;
-    this.quantity            = deliver.quantity;
-    this.subtotal            = deliver.subtotal;
-    this.status              = deliver.deliveryStatus;
-    this.customer_name       = deliver.customerName;
-    this.customer_mobile_num = deliver.customerMobileNum;
-    this.customer_address    = deliver.shippingAddress;
-    this.order_date          = deliver.orderDate;
-    this.cour_lat            = deliver.courLat;
-    this.cour_lng            = deliver.courLng;
-    this.watch_id            = deliver.watchId;
-    this.interval_id         = deliver.intervalId;
+    this.order_id             = deliver.orderId;
+    this.store_id             = deliver.storeId;
+    this.courier_id           = deliver.courierId;
+    this.courier_name         = deliver.courierName;
+    this.courier_phone_num    = deliver.courierPhoneNum;
+    this.product_img          = deliver.productImg;
+    this.name                 = deliver.name;
+    this.price                = deliver.price;
+    this.quantity             = deliver.quantity;
+    this.subtotal             = deliver.subtotal;
+    this.status               = deliver.deliveryStatus;
+    this.customer_name        = deliver.customerName;
+    this.customer_mobile_num  = deliver.customerMobileNum;
+    this.customer_address     = deliver.shippingAddress;
+    this.customer_address_lat = deliver.shippingAddressLat;
+    this.customer_address_lng = deliver.shippingAddressLng;
+    this.order_date           = deliver.orderDate;
 }
 
 Deliver.add = (deliver, result) => {

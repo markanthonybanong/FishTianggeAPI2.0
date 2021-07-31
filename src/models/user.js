@@ -9,6 +9,8 @@ const User = function(user){
     this.phone_number = user.phoneNumber;
     this.password     = user.password;
     this.address      = user.address;
+    this.address_lat  = user.addressLat;
+    this.address_lng  = user.addressLng;
 }
 
 User.create = (user, result) => {
@@ -34,8 +36,8 @@ User.update = (id, user, result) => {
             conn.release();
             throw err;
         }
-        conn.query("UPDATE mobile_users SET img = ?, first_name = ?, last_name = ?, email = ?, phone_number = ?, address = ? WHERE id = ?",
-                     [user.img, user.first_name, user.last_name, user.email, user.phone_number, user.address, id ], (err, res) => {
+        conn.query("UPDATE mobile_users SET img = ?, first_name = ?, last_name = ?, email = ?, phone_number = ?, address = ?, address_lat = ?, address_lng = ? WHERE id = ?",
+                     [user.img, user.first_name, user.last_name, user.email, user.phone_number, user.address, user.address_lat, user.address_lng, id ], (err, res) => {
                     if (err) {
                         result(null, err);
                         return;

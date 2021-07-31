@@ -1,19 +1,21 @@
 const server = require('../server');
 
 const Order = function(order){
-    this.store_id            = order.storeId;
-    this.user_id             = order.userId;
-    this.product_img         = order.img;
-    this.name                = order.name;
-    this.price               = order.price;
-    this.quantity            = order.quantity;
-    this.customer_name       = order.customerName;
-    this.status              = order.orderStatus;
-    this.seller_status       = order.orderSellerStatus;
-    this.order_date          = order.orderDate;
-    this.customer_mobile_num = order.customerMobileNum;
-    this.customer_address    = order.customerAddress;
-    this.order_note          = order.orderNote;
+    this.store_id             = order.storeId;
+    this.user_id              = order.userId;
+    this.product_img          = order.img;
+    this.name                 = order.name;
+    this.price                = order.price;
+    this.quantity             = order.quantity;
+    this.customer_name        = order.customerName;
+    this.status               = order.orderStatus;
+    this.seller_status        = order.orderSellerStatus;
+    this.order_date           = order.orderDate;
+    this.customer_mobile_num  = order.customerMobileNum;
+    this.customer_address     = order.customerAddress;
+    this.customer_address_lat = order.customerAddressLat;
+    this.customer_address_lng = order.customerAddressLng;
+    this.order_note           = order.orderNote;
 }
 
 Order.add = (order, result) => {
