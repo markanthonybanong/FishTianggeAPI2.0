@@ -1,5 +1,5 @@
 const httpStatusCode = require('http-status-codes');
-const Order        = require('../models/Order'); 
+const Order        = require('../models/order'); 
 
 exports.addOrder = async(req, res) => {
     const order = new Order({

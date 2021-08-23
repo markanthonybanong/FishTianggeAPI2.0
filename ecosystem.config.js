@@ -18,8 +18,13 @@ module.exports = {
           PASSWORD: '',
           DATABASE: 'fish_tiangge',
         },
-        env_production: {
+        env_production: { //pm2 start ecosystem.config.js --env production.
           NODE_ENV: 'production',
+          HOST : 'localhost',
+          USER: 'fishtdll_root',
+          PORT: '3000',
+          PASSWORD: '*lYhse@GW!sG',
+          DATABASE: 'fishtdll_fish_tiangge',
         },
     }],
     

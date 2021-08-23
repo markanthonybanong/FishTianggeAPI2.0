@@ -1,5 +1,5 @@
 const httpStatusCode = require('http-status-codes');
-const Deliver        = require('../models/Deliver'); 
+const Deliver        = require('../models/deliver'); 
 
 exports.addToDeliver = async(req, res) => {
     const deliver = new Deliver({

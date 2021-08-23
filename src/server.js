@@ -1,3 +1,7 @@
+if (typeof(PhusionPassenger) != 'undefined') { //for cpanel
+    PhusionPassenger.configure({ autoInstall: false });
+}
+require('dotenv').config();
 var cors       = require('cors');
 var bodyParser = require('body-parser');
 const mysql    = require('mysql2');
@@ -21,10 +25,15 @@ app.use(bodyParser.urlencoded({limit: "500mb", extended: true, parameterLimit:50
 app.use(bodyParser.json({limit: '500mb'}));
 
 app.use(routes());
+if (typeof(PhusionPassenger) != 'undefined') {
+    app.listen('passenger');
+} else {
+    app.listen(port, () => {
+        console.log(`App listening on port ${port}!`);
+    });
+}
 
-app.listen(port, () => {
-    console.log(`App listening on port ${port}!`);
-});
+
 
 const mysql_pool = mysql.createPool({
     connectionLimit: 100,

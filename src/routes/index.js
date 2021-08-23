@@ -10,7 +10,7 @@ const ratingRoutes      = require('./rating');
 const reportRoutes      = require('./report');
 const sukiListRoutes    = require('./suki-list');
 const userMetaRoutes    = require('./user-meta');
-
+const statusRoutes      = require('./status');
 module.exports = () => {
     routes.use(
         '/api/user',
@@ -66,6 +66,9 @@ module.exports = () => {
         '/api/userMeta',
         userMetaRoutes()
     );
-
+    routes.use(
+        '/api/status',
+        statusRoutes()
+    );
     return routes;
 };

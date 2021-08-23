@@ -1,5 +1,5 @@
 const httpStatusCode = require('http-status-codes');
-const Product        = require('../models/Product'); 
+const Product        = require('../models/product'); 
 
 exports.addProduct = async(req, res) => {
     const product = new Product({

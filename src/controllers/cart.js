@@ -1,5 +1,5 @@
 const httpStatusCode = require('http-status-codes');
-const Cart           = require('../models/Cart'); 
+const Cart           = require('../models/cart'); 
 
 exports.add = async(req, res) => {
     const cart = new Cart({
