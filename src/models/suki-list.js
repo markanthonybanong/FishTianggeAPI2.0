@@ -8,7 +8,8 @@ const SukiList = function (sukiList){
 SukiList.add = (sukiList, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("INSERT INTO suki_list SET ?", sukiList, (err, res)=> {
@@ -25,7 +26,8 @@ SukiList.add = (sukiList, result) => {
 SukiList.selectByUserAndStoreId = (sukiList, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM suki_list WHERE user_id = "${sukiList.userId}" AND store_id = "${sukiList.storeId}"`, (err, res) => {
@@ -46,7 +48,8 @@ SukiList.selectByUserAndStoreId = (sukiList, result) => {
 SukiList.selectByUserId = (id, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT suki_list.user_id,
@@ -76,7 +79,8 @@ SukiList.selectByUserId = (id, result) => {
 SukiList.delete = (id, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("DELETE FROM suki_list WHERE id = ?", id, (err, res) => {

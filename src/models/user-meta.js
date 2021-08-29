@@ -9,7 +9,8 @@ const UserMeta = function (userMeta){
 UserMeta.add = (userMeta, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("INSERT INTO user_meta SET ?", userMeta, (err, res)=> {
@@ -25,7 +26,8 @@ UserMeta.add = (userMeta, result) => {
 UserMeta.selectById = (id, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM user_meta WHERE id = "${id}"`, (err, res) => {
@@ -46,7 +48,8 @@ UserMeta.selectById = (id, result) => {
 UserMeta.selectByUserIdAndMetaKey = (userMeta, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM user_meta WHERE user_id = "${userMeta.userId}" AND meta_key = "${userMeta.metaKey}"`, (err, res) => {
@@ -67,7 +70,8 @@ UserMeta.selectByUserIdAndMetaKey = (userMeta, result) => {
 UserMeta.update = (id, userMeta, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE user_meta SET meta_key = ?, meta_value = ? WHERE id = ?",
@@ -89,7 +93,8 @@ UserMeta.update = (id, userMeta, result) => {
 UserMeta.delete = (id, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("DELETE FROM user_meta WHERE id = ?", id, (err, res) => {

@@ -21,7 +21,8 @@ const Order = function(order){
 Order.add = (order, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("INSERT INTO orders SET ?", order, (err, res)=> {
@@ -38,7 +39,8 @@ Order.add = (order, result) => {
 Order.getStorePendingOrders = (storeId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM orders WHERE  store_id = "${storeId}" AND seller_status != "Order Received"`, (err, res) => {
@@ -55,7 +57,8 @@ Order.getStorePendingOrders = (storeId, result) => {
 Order.getStoreDeliveredOrders = (storeId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM orders WHERE status = "Order Received" AND store_id = "${storeId}"`, (err, res) => {
@@ -72,7 +75,8 @@ Order.getStoreDeliveredOrders = (storeId, result) => {
 Order.getOrder = (orderId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM orders WHERE id = "${orderId}"`, (err, res) => {
@@ -89,7 +93,8 @@ Order.getOrder = (orderId, result) => {
 Order.getPendingOrdersByUserId = (userId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM orders WHERE user_id = "${userId}" AND status != "Order Received"`, (err, res) => {
@@ -106,7 +111,8 @@ Order.getPendingOrdersByUserId = (userId, result) => {
 Order.getDeliveredOrdersByUserId = (userId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM orders WHERE user_id = "${userId}" AND status = "Order Received"`, (err, res) => {
@@ -122,7 +128,8 @@ Order.getDeliveredOrdersByUserId = (userId, result) => {
 Order.updateOrderStatus = (id, status, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE orders SET status = ?, seller_status = ? WHERE id = ?", [status, status, id], (err, res) => {
@@ -143,7 +150,8 @@ Order.updateOrderStatus = (id, status, result) => {
 Order.updateOrderSellerStatus = (id, status, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE orders SET seller_status = ? WHERE id = ?", [status, id], (err, res) => {
@@ -165,7 +173,8 @@ Order.updateOrderSellerStatus = (id, status, result) => {
 Order.deleteOrder = (id, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("DELETE FROM orders WHERE id = ?", id, (err, res) => {

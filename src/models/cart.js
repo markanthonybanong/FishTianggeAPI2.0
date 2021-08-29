@@ -17,7 +17,8 @@ const Cart = function(cart){
 Cart.add = (cart, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("INSERT INTO carts SET ?", cart, (err, res)=> {
@@ -34,7 +35,8 @@ Cart.add = (cart, result) => {
 Cart.getUserCartItems = (userId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM carts WHERE user_id = "${userId}" ORDER BY id DESC`, (err, res) => {
@@ -51,7 +53,8 @@ Cart.getUserCartItems = (userId, result) => {
 Cart.updateQuantity = (id, quantity, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE carts SET quantity = ? WHERE id = ?",[quantity,  id ], (err, cartItem) => {
@@ -73,7 +76,8 @@ Cart.updateQuantity = (id, quantity, result) => {
 Cart.removeCartItem = (id, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("DELETE FROM carts WHERE id = ?", id, (err, res) => {
@@ -94,7 +98,8 @@ Cart.removeCartItem = (id, result) => {
 Cart.removeCartItems = (userId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("DELETE FROM carts WHERE user_id = ?", userId, (err, res) => {
