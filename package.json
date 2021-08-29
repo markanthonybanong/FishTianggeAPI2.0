@@ -4,21 +4,25 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "http-status-codes": "^2.1.4",
-    "mysql": "^2.18.1",
-    "mysql2": "^2.2.5",
-    "nodemailer": "^6.6.2",
+    "mysql2": "^2.3.0",
+    "nodemailer": "^6.6.3",
     "random-number": "0.0.9",
-    "socket.io": "^4.0.0",
-    "twilio": "^3.58.0"
+    "socket.io": "^4.1.3",
+    "twilio": "^3.67.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "pm2": "^5.1.1"
+  },
   "scripts": {
     "start": "pm2 start ecosystem.config.js --watch",
+    "start:dev": "cross-env NODE_ENV=development node index.js --trace-warnirngs",
+    "logs": "pm2 logs",
+    "kill": "pm2 delete FISH_TIANGGE_API",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
