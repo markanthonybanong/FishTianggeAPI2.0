@@ -14,12 +14,13 @@ const io       = require('socket.io')(8080, {
                         origin : "*",
                     }
                 });
+app.use(cors());
 io.on('connection', socket =>{
     socket.on('disconnect', function(){
     });
     require('./socket/index')(io, socket);
 });
-app.use(cors());
+
 
 app.use(bodyParser.urlencoded({limit: "500mb", extended: true, parameterLimit:50000}));
 app.use(bodyParser.json({limit: '500mb'}));
