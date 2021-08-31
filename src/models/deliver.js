@@ -24,7 +24,8 @@ Deliver.add = (deliver, result) => {
 
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("INSERT INTO deliveries SET ?", deliver, (err, res)=> {
@@ -41,7 +42,8 @@ Deliver.add = (deliver, result) => {
 Deliver.update = (id, deliver, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         const query = "UPDATE deliveries SET courier_id = ?, courier_name = ?, courier_phone_num = ?, status = ? WHERE id = ?" 
@@ -63,7 +65,8 @@ Deliver.update = (id, deliver, result) => {
 Deliver.deleteToDeliver = (id, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("DELETE FROM deliveries WHERE id = ?", id, (err, res) => {
@@ -85,7 +88,8 @@ Deliver.updateToDeliverStatus = (id, status, result) => {
     
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE deliveries SET status = ? WHERE id = ?", [status, id], (err, res) => {
@@ -107,7 +111,8 @@ Deliver.updateToDeliverStatus = (id, status, result) => {
 Deliver.updateCourierStatus = (id, deliver, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE deliveries SET cour_lat = ?, cour_lng = ?, watch_id = ?, interval_id = ? WHERE id = ?", [deliver.cour_lat, deliver.cour_lng, deliver.watch_id, deliver.interval_id, id], (err, res) => {
@@ -129,7 +134,8 @@ Deliver.updateCourierStatus = (id, deliver, result) => {
 Deliver.getToDeliver = (orderId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM deliveries WHERE order_id = "${orderId}"`, (err, res) => {
@@ -146,7 +152,8 @@ Deliver.getToDeliver = (orderId, result) => {
 Deliver.getCourierPendingDeliveries = (courierId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM deliveries WHERE courier_id = "${courierId}" AND status != "Order Received"`, (err, res) => {
@@ -163,7 +170,8 @@ Deliver.getCourierPendingDeliveries = (courierId, result) => {
 Deliver.getCourierDeliveredDeliveries = (courierId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM deliveries WHERE courier_id = "${courierId}" AND status = 'Order Received'`, (err, res) => {
@@ -180,7 +188,8 @@ Deliver.getCourierDeliveredDeliveries = (courierId, result) => {
 Deliver.getCourierToDeliverProduct = (deliverId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM deliveries WHERE id = "${deliverId}"`, (err, res) => {
@@ -197,7 +206,8 @@ Deliver.getCourierToDeliverProduct = (deliverId, result) => {
 Deliver.getDeliverByCourIdAndStatus = (deliverBody, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM deliveries WHERE courier_id = "${deliverBody.courId}" AND status = "${deliverBody.status}" `, (err, res) => {

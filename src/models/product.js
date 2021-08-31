@@ -17,7 +17,8 @@ Product.add = (product, result) => {
      
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("INSERT INTO products SET ?", product, (err, res)=> {
@@ -34,7 +35,8 @@ Product.add = (product, result) => {
 Product.getStoreProducts = (storeId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM products WHERE store_id = "${storeId}" AND status = "InStore"`, (err, res) => {
@@ -51,7 +53,8 @@ Product.getStoreProducts = (storeId, result) => {
 Product.getAllStoreProducts = (storeId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM products WHERE status = "InStore" ORDER BY id DESC`, (err, res) => {
@@ -68,7 +71,8 @@ Product.getAllStoreProducts = (storeId, result) => {
 Product.deleteProduct = (id, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("DELETE FROM products WHERE id = ?", id, (err, res) => {
@@ -89,7 +93,8 @@ Product.deleteProduct = (id, result) => {
 Product.getProduct = (productId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM products WHERE id = "${productId}"`, (err, res) => {
@@ -106,7 +111,8 @@ Product.getProduct = (productId, result) => {
 Product.update = (id, product, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE products SET img = ?,store_id = ?, remark = ?, name = ?, weight = ?, price = ?, is_available = ?, category = ?, weight_in = ? WHERE id = ?",
@@ -129,7 +135,8 @@ Product.update = (id, product, result) => {
 Product.updateStatus = (id, product, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE products SET status = ? WHERE id = ?",[ product.status, id ], (err, res) => {
@@ -150,7 +157,8 @@ Product.updateStatus = (id, product, result) => {
 Product.getArchieveStoreProducts = (storeId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM products WHERE store_id = "${storeId}" AND status = "InArchieve"`, (err, res) => {
@@ -166,7 +174,8 @@ Product.getArchieveStoreProducts = (storeId, result) => {
 Product.getStoreSameProductsCategory = (product, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM products WHERE store_id = "${product.storeId}" && category = "${product.category}" && id != "${product.productId}"`, (err, res) => {

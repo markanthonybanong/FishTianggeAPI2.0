@@ -12,7 +12,8 @@ const Rating = function(rating){
 Rating.add = (rating, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("INSERT INTO ratings SET ?", rating, (err, res)=> {
@@ -28,7 +29,8 @@ Rating.add = (rating, result) => {
 Rating.selectByUserAndOrderId = (rating, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM ratings WHERE order_id = "${rating.orderId}" AND user_id = "${rating.userId}"`, (err, res) => {
@@ -49,7 +51,8 @@ Rating.selectByUserAndOrderId = (rating, result) => {
 Rating.selectByStoreId = (storeId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT ratings.id,
@@ -83,7 +86,8 @@ Rating.selectByStoreId = (storeId, result) => {
 Rating.selectById = (id, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT ratings.id,
@@ -117,7 +121,8 @@ Rating.selectById = (id, result) => {
 Rating.update = (id, rating, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE ratings SET date_rate = ?, star_number = ?, user_comment = ? WHERE id = ?",
@@ -139,7 +144,8 @@ Rating.update = (id, rating, result) => {
 Rating.delete = (id, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("DELETE FROM ratings WHERE id = ?", id, (err, res) => {

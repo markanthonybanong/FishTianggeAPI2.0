@@ -10,7 +10,8 @@ const Report = function (report){
 Report.add = (report, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("INSERT INTO reports SET ?", report, (err, res)=> {
@@ -26,7 +27,8 @@ Report.add = (report, result) => {
 Report.selectByUserAndOrderId = (report, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM reports WHERE order_id = "${report.orderId}" AND user_id = "${report.userId}"`, (err, res) => {

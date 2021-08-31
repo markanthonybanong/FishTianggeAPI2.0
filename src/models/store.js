@@ -12,7 +12,8 @@ const Store = function(myStore){
 Store.getStoreByUserId = (userId, result) => {
     server.mysqlPool.getConnection((err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM stores WHERE user_id = "${userId}"`, (err, res) => {
@@ -34,7 +35,8 @@ Store.getStoreByUserId = (userId, result) => {
 Store.getStores =  result => {
     server.mysqlPool.getConnection((err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("SELECT * FROM stores ORDER BY id DESC", (err, res) => {
@@ -51,7 +53,8 @@ Store.getStores =  result => {
 Store.add = (store, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`INSERT INTO stores SET ?`, store, (err, res) => {
@@ -68,7 +71,8 @@ Store.add = (store, result) => {
 Store.update = (id, store, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE stores SET img = ?, name = ?, information = ?, location = ?, contact_number = ? WHERE id = ?",

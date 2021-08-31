@@ -16,7 +16,8 @@ const User = function(user){
 User.create = (user, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("INSERT INTO mobile_users SET ?", user, (err, res)=> {
@@ -33,7 +34,8 @@ User.create = (user, result) => {
 User.update = (id, user, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE mobile_users SET img = ?, first_name = ?, last_name = ?, email = ?, phone_number = ?, address = ?, address_lat = ?, address_lng = ? WHERE id = ?",
@@ -56,7 +58,8 @@ User.update = (id, user, result) => {
 User.udpateUserStoreId = (userId, storeId, result) => {
     server.mysqlPool.getConnection((err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE mobile_users set store_id = ? where id = ?", [storeId, userId], (err, user) => {
@@ -78,7 +81,8 @@ User.udpateUserStoreId = (userId, storeId, result) => {
 User.onUserLogin = (user, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM mobile_users WHERE email = "${user.email}" AND password = "${user.password}" OR phone_number = "${user.email}" AND  password = "${user.password}"`, (err, res) => {
@@ -100,7 +104,8 @@ User.onUserLogin = (user, result) => {
 User.getUser = (userId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM mobile_users WHERE id = "${userId}"`, (err, res) => {
@@ -122,7 +127,8 @@ User.getUser = (userId, result) => {
 User.getCouriers = (xx, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("SELECT * FROM mobile_users WHERE user_type = 'Courier' ORDER BY first_name", (err, res) => {
@@ -139,7 +145,8 @@ User.getCouriers = (xx, result) => {
 User.getMobileNumAndEmail = (user, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM mobile_users WHERE email = "${user.email}" OR phone_number = "${user.phoneNum}" ORDER BY first_name`, (err, res) => {
@@ -155,7 +162,8 @@ User.getMobileNumAndEmail = (user, result) => {
 User.updatePassword = (id, user, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("UPDATE mobile_users SET password = ? WHERE id = ?",

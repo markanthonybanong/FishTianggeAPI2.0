@@ -14,7 +14,8 @@ const Application = function(application){
 Application.addApplication = (application, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`INSERT INTO applications SET ?`, application, (err, res) => {
@@ -30,7 +31,8 @@ Application.addApplication = (application, result) => {
 Application.getApplicationByUserId = (userId, result) => {
     server.mysqlPool.getConnection((err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query(`SELECT * FROM applications WHERE user_id = "${userId}"`, (err, res) => {
@@ -51,7 +53,8 @@ Application.getApplicationByUserId = (userId, result) => {
 Application.deleteApplication = (id, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
-            conn.release();
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
             throw err;
         }
         conn.query("DELETE FROM applications WHERE id = ?", id, (err, res) => {
