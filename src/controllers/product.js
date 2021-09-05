@@ -9,7 +9,7 @@ exports.addProduct = async(req, res) => {
         name: req.body.name,
         weight: req.body.weight,
         price: req.body.price,
-        isAvailable: req.body.isAvailable,
+        stockAvailable: req.body.stockAvailable,
         category: req.body.category,
         weightIn: req.body.weightIn,
         status: 'InStore'
@@ -56,7 +56,7 @@ exports.deleteProduct = async(req, res) => {
               });
             } else {
               res.status(httpStatusCode.INTERNAL_SERVER_ERROR).send({
-                message: "Could not delete prodct with id " + req.params.id
+                message: "Could not delete product with id " + req.params.id
               });
             }
           } else res.status(httpStatusCode.OK).send({ message: `Prodcut was deleted successfully!` });
@@ -81,7 +81,7 @@ exports.updateProduct = async(req, res) => {
         name: req.body.name,
         weight: req.body.weight,
         price: req.body.price,
-        isAvailable: req.body.isAvailable,
+        stockAvailable: req.body.stockAvailable,
         category: req.body.category,
         weightIn: req.body.weightIn,
         status: req.body.status
@@ -128,4 +128,24 @@ exports.getStoreSameProductsCategory = async(req, res) => {
             res.status(httpStatusCode.OK).json(products);
         }
     });
+};
+
+exports.substractStockAvailable = async(req, res) => {
+      Product.substractStockAvailable(req.body.id, req.body.toSubtract, (err, product) => {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({message: err});
+        } else {
+            res.status(httpStatusCode.OK).json(product);
+        }
+    });
+};
+
+exports.addStockAvailable = async(req, res) => {
+    Product.addStockAvailable(req.body.id, req.body.toAdd, (err, product) => {
+      if(err) {
+          res.status(httpStatusCode.BAD_REQUEST).send({message: err});
+      } else {
+          res.status(httpStatusCode.OK).json(product);
+      }
+  });
 };

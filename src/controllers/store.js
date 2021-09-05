@@ -18,7 +18,23 @@ exports.getStore = async(req, res) => {
         }
     });
 };
-
+exports.getStoreById = async(req, res) => {
+    Store.getStoreById(req.body.id, (err, store)=> {
+        if(err) {
+            if (err.kind === "not_found"){
+                res.status(httpStatusCode.NOT_FOUND).send({
+                    message: `Not found store with id ${req.body.userId}`
+                });
+            } else {
+                res.status(httpStatusCode.BAD_REQUEST).send({
+                    message: err
+                });
+            }
+        } else {
+            res.status(httpStatusCode.OK).json(store);
+        }
+    });
+};
 exports.getStores = async(req, res) => {
     Store.getStores((err, store)=> {
         if(err) {

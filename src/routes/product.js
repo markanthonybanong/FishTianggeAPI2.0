@@ -19,6 +19,10 @@ module.exports = () => {
     productRoutes.post('/getArchieveStoreProducts', productController.getArchieveStoreProducts);
 
     productRoutes.post('/getStoreSameProductsCategory', productController.getStoreSameProductsCategory);
+
+    productRoutes.put('/substractStockAvailable', productController.substractStockAvailable);
+    
+    productRoutes.put('/addStockAvailable', productController.addStockAvailable);
     
     return productRoutes;
 };

@@ -8,7 +8,6 @@ const Store = function(myStore){
     this.location       = myStore.location;
     this.contact_number = myStore.contactNumber;
 }
-
 Store.getStoreByUserId = (userId, result) => {
     server.mysqlPool.getConnection((err, conn) => {
         if(err) {
@@ -31,7 +30,28 @@ Store.getStoreByUserId = (userId, result) => {
         server.mysqlPool.releaseConnection(conn);
     });
 };
-
+Store.getStoreById = (id, result) => {
+    server.mysqlPool.getConnection((err, conn) => {
+        if(err) {
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
+            throw err;
+        }
+        conn.query(`SELECT * FROM stores WHERE id = "${id}"`, (err, res) => {
+            if(err) {
+                result (err, null);
+                return;
+            }
+            if(res.length){
+                result(null, res[0]);
+                return
+            }
+            //not found
+            result({kind: "not_found"}, null);
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+};
 Store.getStores =  result => {
     server.mysqlPool.getConnection((err, conn) => {
         if(err) {
