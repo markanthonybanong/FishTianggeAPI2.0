@@ -1,16 +1,17 @@
 const server = require('../server');
 
 const Product = function(product){
-    this.store_id        = product.storeId;
-    this.img             = product.img;
-    this.remark          = product.remark;
-    this.name            = product.name;
-    this.weight          = product.weight;
-    this.price           = product.price;
-    this.stock_available = product.stockAvailable;
-    this.category        = product.category;
-    this.weight_in       = product.weightIn;
-    this.status          = product.status
+    this.store_id              = product.storeId;
+    this.img                   = product.img;
+    this.remark                = product.remark;
+    this.name                  = product.name;
+    this.weight                = product.weight;
+    this.price                 = product.price;
+    this.is_available          = product.isAvailable;
+    this.category              = product.category;
+    this.weight_in             = product.weightIn;
+    this.status                = product.status;
+    this.classification_seller = product.classificationSeller;
 }
 
 Product.add = (product, result) => {
@@ -39,7 +40,24 @@ Product.getStoreProducts = (storeId, result) => {
             //we don't release connection if there is no connection :)
             throw err;
         }
-        conn.query(`SELECT * FROM products WHERE store_id = "${storeId}" AND status = "InStore"`, (err, res) => {
+        conn.query(`SELECT * FROM products WHERE store_id = "${storeId}" AND status = "InStore" ORDER BY ID DESC`, (err, res) => {
+            if(err) {
+                result (err, null);
+                return;
+            }
+            result(null, res);
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+};
+Product.getStoreProductsForBuyer = (storeId, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
+            throw err;
+        }
+        conn.query(`SELECT * FROM products WHERE store_id = "${storeId}" AND status = "InStore" AND is_available = "Yes"`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;
@@ -57,7 +75,7 @@ Product.getAllStoreProducts = (storeId, result) => {
             //we don't release connection if there is no connection :)
             throw err;
         }
-        conn.query(`SELECT * FROM products WHERE status = "InStore" ORDER BY id DESC`, (err, res) => {
+        conn.query(`SELECT * FROM products WHERE status = "InStore" AND is_available = "Yes" ORDER BY id DESC`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;
@@ -115,8 +133,8 @@ Product.update = (id, product, result) => {
             //we don't release connection if there is no connection :)
             throw err;
         }
-        conn.query("UPDATE products SET img = ?,store_id = ?, remark = ?, name = ?, weight = ?, price = ?, 	stock_available = ?, category = ?, weight_in = ? WHERE id = ?",
-                     [product.img, product.store_id, product.remark, product.name, product.weight, product.price, product.stock_available, product.category, product.weight_in, id ], (err, res) => {
+        conn.query("UPDATE products SET img = ?,store_id = ?, remark = ?, name = ?, weight = ?, price = ?, 	is_available = ?, category = ?, weight_in = ?, classification_seller = ? WHERE id = ?",
+                     [product.img, product.store_id, product.remark, product.name, product.weight, product.price, product.is_available, product.category, product.weight_in, product.classification_seller, id ], (err, res) => {
                     if (err) {
                         result(null, err);
                         return;
@@ -186,51 +204,6 @@ Product.getStoreSameProductsCategory = (product, result) => {
             result(null, res);
         });
         server.mysqlPool.releaseConnection(conn);
-    });
-};
-Product.substractStockAvailable = (id, toSubtract, result) => {
-    server.mysqlPool.getConnection( (err, conn) => {
-        if(err) {
-            if (conn) conn.release();
-            //we don't release connection if there is no connection :)
-            throw err;
-        }
-        conn.query(`UPDATE products SET stock_available = stock_available - ${toSubtract} WHERE id = ${id}`, (err, res) => {
-                    if (err) {
-                        result(null, err);
-                        return;
-                    }
-                    if (res.affectedRows == 0) {
-                        // not found Customer with the id
-                        result({ kind: "not_found" }, null);
-                        return;
-                    }
-                    result(null, res);
-        });
-        server.mysqlPool.releaseConnection(conn);            
-    });
-};
-
-Product.addStockAvailable = (id, toAdd, result) => {
-    server.mysqlPool.getConnection( (err, conn) => {
-        if(err) {
-            if (conn) conn.release();
-            //we don't release connection if there is no connection :)
-            throw err;
-        }
-        conn.query(`UPDATE products SET stock_available = stock_available + ${toAdd} WHERE id = ${id}`, (err, res) => {
-                    if (err) {
-                        result(null, err);
-                        return;
-                    }
-                    if (res.affectedRows == 0) {
-                        // not found Customer with the id
-                        result({ kind: "not_found" }, null);
-                        return;
-                    }
-                    result(null, res);
-        });
-        server.mysqlPool.releaseConnection(conn);            
     });
 };
 

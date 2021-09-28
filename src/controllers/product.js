@@ -9,10 +9,11 @@ exports.addProduct = async(req, res) => {
         name: req.body.name,
         weight: req.body.weight,
         price: req.body.price,
-        stockAvailable: req.body.stockAvailable,
+        isAvailable: req.body.isAvailable,
         category: req.body.category,
         weightIn: req.body.weightIn,
-        status: 'InStore'
+        status: 'InStore',
+        classificationSeller: req.body.classificationSeller,
     });
   
     Product.add(product, (err, product) => {
@@ -26,6 +27,18 @@ exports.addProduct = async(req, res) => {
 
 exports.getStoreProducts = async(req, res) => {
     Product.getStoreProducts(req.body.storeId, (err, products)=> {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({
+                message: err
+            });
+        } else {
+            res.status(httpStatusCode.OK).json(products);
+        }
+    });
+};
+
+exports.getStoreProductsForBuyer = async(req, res) => {
+    Product.getStoreProductsForBuyer(req.body.storeId, (err, products)=> {
         if(err) {
             res.status(httpStatusCode.BAD_REQUEST).send({
                 message: err
@@ -81,10 +94,11 @@ exports.updateProduct = async(req, res) => {
         name: req.body.name,
         weight: req.body.weight,
         price: req.body.price,
-        stockAvailable: req.body.stockAvailable,
+        isAvailable: req.body.isAvailable,
         category: req.body.category,
         weightIn: req.body.weightIn,
-        status: req.body.status
+        status: req.body.status,
+        classificationSeller: req.body.classificationSeller
     });
     Product.update(req.body.id, product, (err, product) => {
         if(err) {
@@ -128,24 +142,4 @@ exports.getStoreSameProductsCategory = async(req, res) => {
             res.status(httpStatusCode.OK).json(products);
         }
     });
-};
-
-exports.substractStockAvailable = async(req, res) => {
-      Product.substractStockAvailable(req.body.id, req.body.toSubtract, (err, product) => {
-        if(err) {
-            res.status(httpStatusCode.BAD_REQUEST).send({message: err});
-        } else {
-            res.status(httpStatusCode.OK).json(product);
-        }
-    });
-};
-
-exports.addStockAvailable = async(req, res) => {
-    Product.addStockAvailable(req.body.id, req.body.toAdd, (err, product) => {
-      if(err) {
-          res.status(httpStatusCode.BAD_REQUEST).send({message: err});
-      } else {
-          res.status(httpStatusCode.OK).json(product);
-      }
-  });
 };

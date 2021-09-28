@@ -16,6 +16,7 @@ const Order = function(order){
     this.customer_address_lat = order.customerAddressLat;
     this.customer_address_lng = order.customerAddressLng;
     this.order_note           = order.orderNote;
+    this.classification_buyer = order.classificationBuyer;
 }
 
 Order.add = (order, result) => {

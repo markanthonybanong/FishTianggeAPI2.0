@@ -1,16 +1,17 @@
 const server = require('../server');
 
 const Cart = function(cart){
-    this.name       = cart.name;
-    this.price      = cart.price;
-    this.weight     = cart.weight;
-    this.quantity   = cart.quantity;
-    this.remark     = cart.remark;
-    this.category   = cart.category;
-    this.product_id = cart.productId;
-    this.store_id   = cart.storeId;
-    this.user_id    = cart.userId;     
-    this.img        = cart.img;
+    this.name           = cart.name;
+    this.price          = cart.price;
+    this.weight         = cart.weight;
+    this.quantity       = cart.quantity;
+    this.remark         = cart.remark;
+    this.category       = cart.category;
+    this.product_id     = cart.productId;
+    this.store_id       = cart.storeId;
+    this.user_id        = cart.userId;     
+    this.img            = cart.img;
+    this.classification = cart.classification
     
 }
 

@@ -12,7 +12,8 @@ exports.add = async(req, res) => {
         productId: req.body.id,
         storeId: req.body.storeId,
         userId: req.body.userId,
-        img: req.body.img
+        img: req.body.img,
+        classification: req.body.classificationBuyer
     });
     Cart.add(cart, (err, cart) => {
         if(err) {

@@ -18,6 +18,7 @@ const Deliver = function(deliver){
     this.customer_address_lat = deliver.shippingAddressLat;
     this.customer_address_lng = deliver.shippingAddressLng;
     this.order_date           = deliver.orderDate;
+    this.classification_buyer = deliver.classificationBuyer;
 }
 
 Deliver.add = (deliver, result) => {

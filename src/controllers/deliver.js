@@ -19,7 +19,8 @@ exports.addToDeliver = async(req, res) => {
         shippingAddress: req.body.shippingAddress,
         shippingAddressLat: req.body.shippingAddressLat,
         shippingAddressLng: req.body.shippingAddressLng,
-        orderDate: req.body.orderDate
+        orderDate: req.body.orderDate,
+        classificationBuyer: req.body.classification
     });
     
     Deliver.add(deliver, (err, deliver) => {

@@ -6,6 +6,8 @@ module.exports = () => {
 
     productRoutes.post('/getStoreProducts', productController.getStoreProducts);
 
+    productRoutes.post('/getStoreProductsForBuyer', productController.getStoreProductsForBuyer);
+
     productRoutes.post('/getAllStoreProducts', productController.getAllStoreProducts);
 
     productRoutes.delete('/deleteProduct/:id', productController.deleteProduct);
@@ -19,10 +21,6 @@ module.exports = () => {
     productRoutes.post('/getArchieveStoreProducts', productController.getArchieveStoreProducts);
 
     productRoutes.post('/getStoreSameProductsCategory', productController.getStoreSameProductsCategory);
-
-    productRoutes.put('/substractStockAvailable', productController.substractStockAvailable);
-    
-    productRoutes.put('/addStockAvailable', productController.addStockAvailable);
     
     return productRoutes;
 };

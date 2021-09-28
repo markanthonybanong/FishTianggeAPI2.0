@@ -17,9 +17,9 @@ exports.addOrder = async(req, res) => {
         customerAddress: req.body.customer_address,
         customerAddressLat: req.body.customer_address_lat,
         customerAddressLng: req.body.customer_address_lng,
-        orderNote: req.body.order_note
+        orderNote: req.body.order_note,
+        classificationBuyer: req.body.classification,
     });
-    
     Order.add(order, (err, order) => {
         if(err) {
             res.status(httpStatusCode.BAD_REQUEST).send({message: err});
