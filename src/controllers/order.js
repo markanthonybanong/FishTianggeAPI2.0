@@ -29,8 +29,77 @@ exports.addOrder = async(req, res) => {
     });
 };
 
+exports.getStoreNoneOrders = async(req, res) => {
+    Order.getStoreNoneOrders(req.body.storeId, (err, orders)=> {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({
+                message: err
+            });
+        } else {
+            res.status(httpStatusCode.OK).json(orders);
+        }
+    });
+};
+
 exports.getStorePendingOrders = async(req, res) => {
     Order.getStorePendingOrders(req.body.storeId, (err, orders)=> {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({
+                message: err
+            });
+        } else {
+            res.status(httpStatusCode.OK).json(orders);
+        }
+    });
+};
+exports.getStoreAcceptOrders = async(req, res) => {
+    Order.getStoreAcceptOrders(req.body.storeId, (err, orders)=> {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({
+                message: err
+            });
+        } else {
+            res.status(httpStatusCode.OK).json(orders);
+        }
+    });
+};
+
+exports.getStoreDeclineOrders = async(req, res) => {
+    Order.getStoreDeclineOrders(req.body.storeId, (err, orders)=> {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({
+                message: err
+            });
+        } else {
+            res.status(httpStatusCode.OK).json(orders);
+        }
+    });
+};
+
+exports.getStoreOnTheWayOrders = async(req, res) => {
+    Order.getStoreOnTheWayOrders(req.body.storeId, (err, orders)=> {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({
+                message: err
+            });
+        } else {
+            res.status(httpStatusCode.OK).json(orders);
+        }
+    });
+};
+exports.getStoreDeliverOrders = async(req, res) => {
+    Order.getStoreDeliverOrders(req.body.storeId, (err, orders)=> {
+        if(err) {
+            res.status(httpStatusCode.BAD_REQUEST).send({
+                message: err
+            });
+        } else {
+            res.status(httpStatusCode.OK).json(orders);
+        }
+    });
+};
+exports.getStoreAllOrders = async(req, res) => {
+    Order.getStoreAllOrders(req.body.storeId, (err, orders)=> {
         if(err) {
             res.status(httpStatusCode.BAD_REQUEST).send({
                 message: err

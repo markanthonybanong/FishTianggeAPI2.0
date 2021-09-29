@@ -36,7 +36,23 @@ Order.add = (order, result) => {
         server.mysqlPool.releaseConnection(conn);
     });
 };
-
+Order.getStoreNoneOrders = (storeId, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
+            throw err;
+        }
+        conn.query(`SELECT * FROM orders WHERE store_id = "${storeId}" AND status = "None" AND seller_status != "Order Received" ORDER BY ID DESC`, (err, res) => {
+            if(err) {
+                result (err, null);
+                return;
+            }
+            result(null, res);
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+};
 Order.getStorePendingOrders = (storeId, result) => {
     server.mysqlPool.getConnection( (err, conn) => {
         if(err) {
@@ -44,7 +60,92 @@ Order.getStorePendingOrders = (storeId, result) => {
             //we don't release connection if there is no connection :)
             throw err;
         }
-        conn.query(`SELECT * FROM orders WHERE  store_id = "${storeId}" AND seller_status != "Order Received"`, (err, res) => {
+        conn.query(`SELECT * FROM orders WHERE store_id = "${storeId}" AND status = "Pending" AND seller_status != "Order Received" ORDER BY ID DESC`, (err, res) => {
+            if(err) {
+                result (err, null);
+                return;
+            }
+            result(null, res);
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+};
+Order.getStoreAcceptOrders = (storeId, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
+            throw err;
+        }
+        conn.query(`SELECT * FROM orders WHERE store_id = "${storeId}" AND status = "Accept" AND seller_status != "Order Received" ORDER BY ID DESC`, (err, res) => {
+            if(err) {
+                result (err, null);
+                return;
+            }
+            result(null, res);
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+};
+Order.getStoreDeclineOrders = (storeId, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
+            throw err;
+        }
+        conn.query(`SELECT * FROM orders WHERE store_id = "${storeId}" AND status = "Decline" AND seller_status != "Order Received" ORDER BY ID DESC`, (err, res) => {
+            if(err) {
+                result (err, null);
+                return;
+            }
+            result(null, res);
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+};
+Order.getStoreOnTheWayOrders = (storeId, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
+            throw err;
+        }
+        conn.query(`SELECT * FROM orders WHERE store_id = "${storeId}" AND status = "On The Way" AND seller_status != "Order Received" ORDER BY ID DESC`, (err, res) => {
+            if(err) {
+                result (err, null);
+                return;
+            }
+            result(null, res);
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+}
+Order.getStoreDeliverOrders = (storeId, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
+            throw err;
+        }
+        conn.query(`SELECT * FROM orders WHERE store_id = "${storeId}" AND status = "Deliver" AND seller_status != "Order Received" ORDER BY ID DESC`, (err, res) => {
+            if(err) {
+                result (err, null);
+                return;
+            }
+            result(null, res);
+        });
+        server.mysqlPool.releaseConnection(conn);
+    });
+}
+Order.getStoreAllOrders = (storeId, result) => {
+    server.mysqlPool.getConnection( (err, conn) => {
+        if(err) {
+            if (conn) conn.release();
+            //we don't release connection if there is no connection :)
+            throw err;
+        }
+        conn.query(`SELECT * FROM orders WHERE store_id = "${storeId}" AND seller_status != "Order Received" ORDER BY ID DESC`, (err, res) => {
             if(err) {
                 result (err, null);
                 return;
